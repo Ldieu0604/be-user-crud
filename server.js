@@ -103,9 +103,14 @@ app.delete('/api/users/:id', async (req, res) => {
 });
 
 // Kết nối DB và chạy server
-mongoose.connect(process.env.MONGO_URI)
+mongoose
+    .connect(process.env.MONGO_URI)
     .then(() => {
         console.log("Connected to MongoDB");
-        app.listen(process.env.PORT || 3001, () => console.log("Server running on http://localhost:" + process.env.PORT));
     })
     .catch(err => console.error("MongoDB Error:", err));
+
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
