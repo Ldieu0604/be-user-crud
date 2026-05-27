@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+dotenv.config({ quiet: true });
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
@@ -101,10 +103,9 @@ app.delete('/api/users/:id', async (req, res) => {
 });
 
 // Kết nối DB và chạy server
-const DB_URI = "mongodb+srv://20225141:abc20225141@cluster0.jxgmel5.mongodb.net/it4409-20225141";
-mongoose.connect(DB_URI)
+mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         console.log("Connected to MongoDB");
-        app.listen(3001, () => console.log("Server running on http://localhost:3001"));
+        app.listen(process.env.PORT || 3001, () => console.log("Server running on http://localhost:" + process.env.PORT));
     })
     .catch(err => console.error("MongoDB Error:", err));
